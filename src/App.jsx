@@ -5,22 +5,35 @@ import InvestmentDataTable from "./components/InvestmentDataTable/InvestmentData
 import { calculateInvestmentResults } from "./util/investment";
 
 function App() {
-  const [annualData, setAnnualData] = useState(calculateInvestmentResults({
+  const [investmentData, setInvestmentData] = useState({
     initialInvestment: 10000,
     annualInvestment: 1200,
     expectedReturn: 6,
     duration: 10
-  }));
+  })
 
-  const annualDataChangeHandler = (newData) => {
-    console.log(newData);
-    setAnnualData(newData);
+  const InvestmentDataChangeHandler = ( dataPoint, newValue ) => {
+    setInvestmentData((oldInvestmentData) =>{
+      let newInvestmentData = {...oldInvestmentData};
+      newInvestmentData[dataPoint] = newValue;
+      return newInvestmentData
+    })
+
   }
+
+  const numberConvertedInvesetmentData = {
+    initialInvestment: Number(investmentData.initialInvestment),
+    annualInvestment: Number(investmentData.annualInvestment),
+    expectedReturn: Number(investmentData.expectedReturn),
+    duration: Number(investmentData.duration)
+  }
+
+  const annualData = calculateInvestmentResults(numberConvertedInvesetmentData)
 
   return (
     <div>
       <Header/>
-      <UserInput onAnnualDataChange={annualDataChangeHandler}/>
+      <UserInput investmentData={investmentData} onInvestmentDataChange={InvestmentDataChangeHandler}/>
       <InvestmentDataTable annualData={annualData}/>
     </div>
   )

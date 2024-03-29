@@ -2,53 +2,31 @@ import NumberInputField from "./NumberInputField"
 import { calculateInvestmentResults } from "../util/investment"
 import { useState } from "react"
 
-export default function UserInput({ onAnnualDataChange }) {
-    const [initialInvestment, setInitialInvestment] = useState(10000);
-    const [annualInvestment, setAnnualInvestment] = useState(1200);
-    const [expectedReturn, setExpectedReturn] = useState(6)
-    const [duration, setDuration] = useState(10);
-
+export default function UserInput({ investmentData, onInvestmentDataChange }) {
     const initialInvestmentChangeHandler = (newValue) => {
-        setInitialInvestment(newValue);
-        calculateNewAnnualData();
+        onInvestmentDataChange("initialInvestment", newValue);
     }
-
     const annualInvestmentChangeHandler = (newValue) => {
-        setAnnualInvestment(newValue);
-        calculateNewAnnualData();
+        onInvestmentDataChange("annualInvestment", newValue);
     }
-
     const expectedReturnChangeHandler = (newValue) => {
-        setExpectedReturn(newValue);
-        calculateNewAnnualData();
+        onInvestmentDataChange("expectedReturn", newValue);
     }
-
     const durationChangeHandler = (newValue) => {
-        setDuration(newValue);
-        calculateNewAnnualData();
+        onInvestmentDataChange("duration", newValue);
     }
 
-    const calculateNewAnnualData = () => {
-        const investmentData = {
-            initialInvestment: Number(initialInvestment),
-            annualInvestment: Number(annualInvestment),
-            expectedReturn: Number(expectedReturn),
-            duration: Number(duration)
-        }
-
-        const newAnnualData = calculateInvestmentResults(investmentData)
-        onAnnualDataChange(newAnnualData);
-    }
+    console.log(JSON.stringify(investmentData))
 
     return (
         <div id="user-input">
             <span className="input-group">
-                <NumberInputField title={"Initial Investment"} value={initialInvestment} onChange={initialInvestmentChangeHandler}/>
-                <NumberInputField title={"Annual Investment"} value={annualInvestment} onChange={annualInvestmentChangeHandler}/>
+                <NumberInputField title={"Initial Investment"} value={investmentData.initialInvestment} onChange={initialInvestmentChangeHandler}/>
+                <NumberInputField title={"Annual Investment"} value={investmentData.annualInvestment} onChange={annualInvestmentChangeHandler}/>
             </span>
             <span className="input-group"> 
-                <NumberInputField title={"Expected Return"} value={expectedReturn} onChange={expectedReturnChangeHandler}/>
-                <NumberInputField title={"Duration"} value={duration} onChange={durationChangeHandler}/>
+                <NumberInputField title={"Expected Return"} value={investmentData.expectedReturn} onChange={expectedReturnChangeHandler}/>
+                <NumberInputField title={"Duration"} value={investmentData.duration} onChange={durationChangeHandler}/>
             </span>
         </div>
     )
