@@ -1,6 +1,4 @@
 import NumberInputField from "./NumberInputField"
-import { calculateInvestmentResults } from "../util/investment"
-import { useState } from "react"
 
 export default function UserInput({ investmentData, onInvestmentDataChange }) {
     const initialInvestmentChangeHandler = (newValue) => {
@@ -15,8 +13,6 @@ export default function UserInput({ investmentData, onInvestmentDataChange }) {
     const durationChangeHandler = (newValue) => {
         onInvestmentDataChange("duration", newValue);
     }
-
-    console.log(JSON.stringify(investmentData))
 
     return (
         <div id="user-input">

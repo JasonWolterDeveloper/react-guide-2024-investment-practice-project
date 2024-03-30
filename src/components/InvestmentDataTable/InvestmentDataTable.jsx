@@ -12,7 +12,7 @@ export default function InvestmentDataTable({ annualData }) {
             </tr>
         </thead>
         <tbody>
-            {annualData.map((yearData) => <InvestmentDataTableEntry yearData={yearData} />)}
+            {annualData.map((yearData) => <InvestmentDataTableEntry key={yearData.year} yearData={yearData} />)}
         </tbody>
 
     </table>
